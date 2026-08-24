@@ -1,9 +1,10 @@
 <?php
 
-$allowedOrigins = [
-    'https://localhost:4541',
-    'https://tiptoi-manager.nico.dev',
-];
+ $allowedOrigins = [
+     'https://localhost:4541',
+     'https://tiptoi-manager.nico.dev',
+     'https://localhost:5173',
+ ];
 
 function getToken()
 {
