@@ -35,7 +35,7 @@ const FileFinder: React.FC<{ className?: string }> = ({ className = '' }) => {
           product.categories.some((item) => checkedCategories.includes(item)) &&
           product.name.toLowerCase().includes(searchTerm.toLowerCase())
       ),
-    [searchTerm, checkedCategories]
+    [products, searchTerm, checkedCategories]
   );
 
   return (
