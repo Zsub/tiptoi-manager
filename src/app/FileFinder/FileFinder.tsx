@@ -45,6 +45,18 @@ const FileFinder: React.FC<{ className?: string }> = ({ className = '' }) => {
     setCheckedCategories(productCategories);
   }, [productCategories]);
 
+  // If the language the filter is set to gets deselected in the header, fall
+  // back to "any" - otherwise `availableIn.includes(languageFilter)` would
+  // never match again and the list would silently show zero products.
+  React.useEffect(() => {
+    if (
+      languageFilter !== ANY_LANGUAGE &&
+      !selectedLanguages.includes(languageFilter)
+    ) {
+      setLanguageFilter(ANY_LANGUAGE);
+    }
+  }, [selectedLanguages, languageFilter]);
+
   const { formatMessage } = useIntl();
 
   const results = React.useMemo<Array<MergedProduct>>(() => {
