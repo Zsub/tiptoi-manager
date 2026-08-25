@@ -1,18 +1,52 @@
-import { FieldCheckbox } from '@theme';
+import { FieldCheckbox, FieldSelect } from '@theme';
 import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { STATE, useCatalog } from '@app/catalog/CatalogContext.tsx';
+import { LANGUAGES, Locale } from '@app/catalog/languages.ts';
 
 import styles from './FileFinderForm.module.css';
+
+/** Sentinel meaning "no language filter applied" - not a real `Locale`. */
+export const ANY_LANGUAGE = 'any';
 
 const FileFinderForm: React.FC<{
   setSearchTerm: (term: string) => void;
   checkedCategories: Array<string>;
   setCheckedCategories: (categories: Array<string>) => void;
-}> = ({ setSearchTerm, checkedCategories, setCheckedCategories }) => {
-  const { productCategories, state } = useCatalog();
+  languageFilter: Locale | typeof ANY_LANGUAGE;
+  setLanguageFilter: (language: Locale | typeof ANY_LANGUAGE) => void;
+}> = ({
+  setSearchTerm,
+  checkedCategories,
+  setCheckedCategories,
+  languageFilter,
+  setLanguageFilter,
+}) => {
+  const { productCategories, state, selectedLanguages } = useCatalog();
   const { formatMessage } = useIntl();
+
+  // Only offer languages the user actually downloaded - filtering by a
+  // language they never selected would always yield zero results.
+  const languageOptions = React.useMemo(
+    () =>
+      selectedLanguages.reduce(
+        (acc, locale) => ({
+          ...acc,
+          [locale]: {
+            name:
+              LANGUAGES.find((language) => language.code === locale)?.label ||
+              locale,
+          },
+        }),
+        { [ANY_LANGUAGE]: { name: 'Any language' } } as Record<
+          string,
+          { name: string }
+        >
+      ),
+    [selectedLanguages]
+  );
+
   return (
     <div className={styles.root}>
       <input
@@ -24,6 +58,24 @@ const FileFinderForm: React.FC<{
         className={styles.searchterm}
         placeholder={formatMessage({ id: 'filter.search.placeholder' })}
       />
+      {selectedLanguages.length !== 0 && (
+        <React.Fragment>
+          <h3 className={styles.titlecat}>Available in</h3>
+          <FieldSelect
+            name="languageFilter"
+            id="languageFilter"
+            value={languageFilter}
+            options={languageOptions}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              const value = e.target.value;
+              setLanguageFilter(
+                value === ANY_LANGUAGE ? ANY_LANGUAGE : (value as Locale)
+              );
+            }}
+            className={styles.languageSelect}
+          />
+        </React.Fragment>
+      )}
       {productCategories.length !== 0 && (
         <React.Fragment>
           <h3 className={styles.titlecat}>
