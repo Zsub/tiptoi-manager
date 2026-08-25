@@ -1,5 +1,5 @@
-import { ProductImageI } from '@app/catalog/types.ts';
-import { IDB_STORE_FILES } from '@app/storage/constants.ts';
+import { Catalog, ProductImageI } from '@app/catalog/types.ts';
+import { IDB_STORE_CATALOG, IDB_STORE_FILES } from '@app/storage/constants.ts';
 
 import { base64Content, mimeType } from '@utils/functions.ts';
 
@@ -32,3 +32,15 @@ export const clear = async (): Promise<void> =>
 
 export const getKeys = async (): Promise<Array<string>> =>
   (await dbPromise).getAllKeys(IDB_STORE_FILES);
+
+export const getCatalog = async (key: string): Promise<Catalog> =>
+  (await dbPromise).get(IDB_STORE_CATALOG, key);
+
+export const setCatalog = async (key: string, val: Catalog) =>
+  (await dbPromise).put(IDB_STORE_CATALOG, val, key);
+
+export const delCatalog = async (key: string): Promise<void> =>
+  (await dbPromise).delete(IDB_STORE_CATALOG, key);
+
+export const clearCatalog = async (): Promise<void> =>
+  (await dbPromise).clear(IDB_STORE_CATALOG);
