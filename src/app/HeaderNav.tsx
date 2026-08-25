@@ -1,6 +1,13 @@
 import { Button, PortalBox } from '@theme';
 import React from 'react';
 
+import { useCatalog } from '@app/catalog/CatalogContext.tsx';
+import {
+  DEFAULT_LOCALE,
+  LANGUAGES,
+  isAvailableLocale,
+} from '@app/catalog/languages.ts';
+
 import cn from '@utils/classnames';
 import { appTitle } from '@utils/constants';
 
@@ -14,6 +21,7 @@ const NAVIGATION: Record<Menu, string> = {
 };
 
 const HeaderNav = ({ className = '' }: { className?: string }) => {
+  const { selectedLanguages, setSelectedLanguages } = useCatalog();
   const [activeBox, setActiveBox] = React.useState<Menu>(null);
 
   return (
@@ -30,6 +38,26 @@ const HeaderNav = ({ className = '' }: { className?: string }) => {
             {title}
           </Button>
         ))}
+        <label className={styles.catalogLanguage}>
+          <span className={styles.label}>Catalog Language</span>
+          <select
+            value={selectedLanguages[0] || DEFAULT_LOCALE}
+            onChange={(e) => {
+              const value = e.target.value;
+              isAvailableLocale(value) && setSelectedLanguages([value]);
+            }}
+            className={styles.select}
+          >
+            {/* Unavailable locales stay visible but disabled: hiding them
+                invites someone to "fix" it later by re-adding a broken
+                option. `en_GB` returns an empty catalog upstream. */}
+            {LANGUAGES.map(({ code, label, available }) => (
+              <option value={code} key={code} disabled={!available}>
+                {available ? label : `${label} (unavailable)`}
+              </option>
+            ))}
+          </select>
+        </label>
         {activeBox === 'credits' && (
           <PortalBox close={() => setActiveBox(null)} title="Credits">
             <div className={styles.content}>
