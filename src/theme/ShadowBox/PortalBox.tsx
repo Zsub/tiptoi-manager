@@ -12,7 +12,7 @@ export default ({
   ...props
 }: {
   children?: React.JSX.Element | React.JSX.Element[] | string;
-  close: Function;
+  close: () => void;
   size?: 'large' | 'small';
   [key: string]: any;
 }) => (

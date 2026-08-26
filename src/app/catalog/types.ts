@@ -90,7 +90,7 @@ export interface Catalog {
   modifiedAt: string;
   products: Array<Product>;
   audios: Array<Audio>;
-  bestsellers: Array<Object>;
+  bestsellers: Array<string>;
   recommended: Array<string>;
   marketingTiles: Array<{
     text: string;

@@ -6,7 +6,7 @@ import styles from './CloseButton.module.css';
 
 const CloseButton: React.FC<{
   className?: string;
-  onClick: Function;
+  onClick: () => void;
 }> = ({ className = '', onClick }) => (
   <button className={cn(styles.root, className)} onClick={() => onClick()}>
     close

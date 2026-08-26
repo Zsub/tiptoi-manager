@@ -8,7 +8,7 @@ import styles from './ContentModal.module.css';
 const ContentModal: React.FC<{
   title: string;
   children?: React.JSX.Element | React.JSX.Element[] | string;
-  onClose: Function;
+  onClose: () => void;
   className?: string;
   loading?: boolean;
   full?: boolean;
