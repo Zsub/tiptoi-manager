@@ -1,16 +1,19 @@
 import { Button, PortalBox } from '@theme';
 import React from 'react';
 
+import LanguageSelect from '@app/catalog/LanguageSelect.tsx';
+
 import cn from '@utils/classnames';
 import { appTitle } from '@utils/constants';
 
 import styles from './HeaderNav.module.css';
 
-type Menu = 'credits' | 'legal';
+type Menu = 'credits' | 'legal' | 'languages';
 
 const NAVIGATION: Record<Menu, string> = {
   legal: 'legal',
   credits: 'credits',
+  languages: 'languages',
 };
 
 const HeaderNav = ({ className = '' }: { className?: string }) => {
@@ -30,6 +33,13 @@ const HeaderNav = ({ className = '' }: { className?: string }) => {
             {title}
           </Button>
         ))}
+        {activeBox === 'languages' && (
+          <PortalBox close={() => setActiveBox(null)} title="Languages">
+            <div className={styles.content}>
+              <LanguageSelect />
+            </div>
+          </PortalBox>
+        )}
         {activeBox === 'credits' && (
           <PortalBox close={() => setActiveBox(null)} title="Credits">
             <div className={styles.content}>

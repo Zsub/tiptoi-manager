@@ -33,10 +33,15 @@ const Tooltip: React.FC<{
 
   const id: string = React.useMemo(() => {
     i++;
-    tooltipRef?.current &&
-      tooltipRef.current.setAttribute('aria-describedby', `tooltip${i}`);
     return `tooltip${i}`;
-  }, [tooltipRef?.current]);
+  }, []);
+
+  // Runs after commit, so tooltipRef.current is already attached even on the
+  // very first invocation - unlike useMemo (which runs during render and
+  // would need an incidental extra re-render to observe a populated ref).
+  React.useEffect(() => {
+    tooltipRef?.current?.setAttribute('aria-describedby', id);
+  }, [tooltipRef, id]);
 
   const addListeners = (element: HTMLElement) => {
     if (element) {
@@ -53,14 +58,12 @@ const Tooltip: React.FC<{
   };
 
   React.useEffect(() => {
-    addListeners(
-      customTriggerRef ? customTriggerRef?.current : tooltipRef?.current
-    );
-    return () =>
-      removeListeners(
-        customTriggerRef ? customTriggerRef?.current : tooltipRef?.current
-      );
-  }, [tooltipRef?.current, customTriggerRef?.current]);
+    const element = customTriggerRef
+      ? customTriggerRef?.current
+      : tooltipRef?.current;
+    addListeners(element);
+    return () => removeListeners(element);
+  }, [tooltipRef, customTriggerRef]);
 
   return (
     <div

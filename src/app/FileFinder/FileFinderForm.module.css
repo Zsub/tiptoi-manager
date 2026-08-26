@@ -20,6 +20,10 @@
   margin-top: var(--space-grid);
 }
 
+.languageSelect {
+  margin-top: var(--space-grid-half);
+}
+
 .categories {
   margin-top: var(--space-grid-half);
   list-style: none;

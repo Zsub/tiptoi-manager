@@ -7,7 +7,7 @@ import styles from './FieldSelect.module.css';
 const FieldSelect: React.FC<{
   className?: string;
   value: string;
-  onChange: Function;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   name: string;
   id: string;
   options: Record<string, { name: string; [key: string]: any }>;

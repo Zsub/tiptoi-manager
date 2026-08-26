@@ -32,3 +32,8 @@
 .error {
   margin-top: var(--space-grid-big);
 }
+
+.empty {
+  margin-top: var(--space-grid);
+  opacity: 0.7;
+}

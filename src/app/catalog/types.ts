@@ -55,6 +55,13 @@ export interface Product {
   relatedProduct: string;
 }
 
+/**
+ * A single `.gme` file of a product. `id` is the tiptoi "Product ID" burned
+ * into the file and is therefore stable ACROSS languages - unlike
+ * `Product.id`, which is language specific.
+ */
+export type GameFile = Product['gameFiles'][number];
+
 export interface Audio {
   id: string;
   name: string;
@@ -83,7 +90,7 @@ export interface Catalog {
   modifiedAt: string;
   products: Array<Product>;
   audios: Array<Audio>;
-  bestsellers: Array<Object>;
+  bestsellers: Array<string>;
   recommended: Array<string>;
   marketingTiles: Array<{
     text: string;
