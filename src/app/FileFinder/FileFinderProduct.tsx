@@ -1,44 +1,52 @@
-import {
-  Button,
-  /* Tooltip*/
-} from '@theme';
+import { Button } from '@theme';
 import React from 'react';
 
 import FileFinderInstall from '@app/FileFinder/FileFinderInstall.tsx';
-import {
-  /*useDirHandle,*/
-  usePenFiles,
-} from '@app/FilesContext.tsx';
-import { ProductI } from '@app/catalog/types.ts';
+import { usePenFiles } from '@app/FilesContext.tsx';
+import { MergedProduct } from '@app/catalog/CatalogContext.tsx';
+import { Locale } from '@app/catalog/languages.ts';
 
 import cn from '@utils/classnames.ts';
 
 import styles from './FileFinderProduct.module.css';
 
-const FileFinderProduct: React.FC<{
-  className?: string;
-  product: ProductI;
-}> = ({ className = '', product }) => {
-  const [showModal, setShowModal] = React.useState<boolean>(false);
-  const { files } = usePenFiles();
-
-  const gameFile = React.useMemo(
-    () => (product.gameFiles.length >= 1 ? product.gameFiles[0] : null),
-    [product.gameFiles]
+/** Locales, in `merged.availableIn` order, that actually ship a game file. */
+const downloadableLanguages = (merged: MergedProduct): Array<Locale> =>
+  merged.availableIn.filter((locale) =>
+    Boolean(merged.byLang[locale]?.gameFile)
   );
 
+const FileFinderProduct: React.FC<{
+  className?: string;
+  merged: MergedProduct;
+}> = ({ className = '', merged }) => {
+  const [showModal, setShowModal] = React.useState<boolean>(false);
+  const { files } = usePenFiles();
+  const product = merged.primary.product;
+
+  const languages = React.useMemo(
+    () => downloadableLanguages(merged),
+    [merged]
+  );
+
+  const installedFileNames = React.useMemo<Array<string>>(
+    () => files.reduce((acc, file) => [...acc, encodeURI(file.name)], []),
+    [files]
+  );
+
+  // A product with more than one downloaded language only counts as
+  // "Installed" once every one of those language files is on the pen -
+  // otherwise the button would block the user from grabbing the language
+  // they don't have yet, which defeats the point of the feature.
   const alreadyInstalled = React.useMemo<boolean>(() => {
-    if (!gameFile) {
-      return false;
-    }
-    const parts = gameFile.url.split('/');
-    const gameFileName = parts[parts.length - 1];
-    const installedFiles = files.reduce(
-      (acc, file) => [...acc, encodeURI(file.name)],
-      []
-    );
-    return installedFiles.indexOf(gameFileName) !== -1;
-  }, [gameFile, files]);
+    if (languages.length === 0) return false;
+    return languages.every((locale) => {
+      const gameFile = merged.byLang[locale]?.gameFile;
+      if (!gameFile) return false;
+      const gameFileName = gameFile.url.split('/').pop();
+      return installedFileNames.includes(gameFileName);
+    });
+  }, [languages, merged, installedFileNames]);
 
   return (
     <div className={cn(className, styles.root)}>
@@ -53,12 +61,12 @@ const FileFinderProduct: React.FC<{
       {showModal && (
         <FileFinderInstall
           onClose={() => setShowModal(false)}
-          product={product}
+          merged={merged}
         />
       )}
       <p className={styles.title}>{product.name}</p>
 
-      {gameFile && (
+      {languages.length > 0 && (
         <Button
           className={styles.download}
           icon="download"

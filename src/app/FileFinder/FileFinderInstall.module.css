@@ -3,3 +3,24 @@
     margin-top: 2rem;
   }
 }
+
+.languages {
+  & > * + * {
+    margin-top: var(--space-s);
+  }
+}
+
+.languagesHint {
+  font-size: var(--fs-small);
+  color: var(--c-p);
+}
+
+.languageOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space);
+}
+
+.languageOption {
+  white-space: nowrap;
+}
