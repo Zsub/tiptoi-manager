@@ -8,7 +8,7 @@ import styles from './Button.module.css';
 const Button: React.FC<{
   children?: React.JSX.Element | React.JSX.Element[] | string;
   className?: string;
-  onClick?: Function;
+  onClick?: () => void;
   layout?: 'solid' | 'ghost';
   icon?: IconType;
   iconRight?: boolean;
@@ -16,7 +16,6 @@ const Button: React.FC<{
   loading?: boolean;
   disabled?: boolean;
   color?: 'black' | 'orange';
-  fontWeight?: 'normal' | 'bold';
   [key: string]: any;
 }> = ({
   children = '',
@@ -29,7 +28,6 @@ const Button: React.FC<{
   loading = false,
   disabled = false,
   color = 'orange',
-  fontWeight = 'bold',
   ...props
 }) => (
   <button

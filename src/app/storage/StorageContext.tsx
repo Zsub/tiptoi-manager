@@ -77,7 +77,7 @@ export const StorageContextProvider: React.FC<{
   const getLocalItem = (key: string): string =>
     window.localStorage.getItem(key) || null;
 
-  const getFile = (key: string) => getGme(key);
+  const getFile = React.useCallback((key: string) => getGme(key), []);
 
   const setFile = async (key: string, value: SavedProduct) => {
     !persisted && (await persist());

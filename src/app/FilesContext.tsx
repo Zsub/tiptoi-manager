@@ -39,21 +39,22 @@ export const usePenFiles = (): {
   reloadFiles: () => void;
 } => {
   const { files, setFiles, dirHandle } = React.useContext(FilesContext);
+  const reloadFiles = React.useCallback(() => {
+    dirHandle &&
+      getDirectoryEntries(dirHandle).then((entries) => {
+        const gmeFiles = entries.filter(
+          (entry) =>
+            entry.kind === 'file' &&
+            entry.name.split('.').pop() === 'gme' &&
+            entry.name !== 'Stickerbogen_Starterset.gme' &&
+            entry.name !== 'Schnellstart-Anleitung.gme'
+        ) as Array<FileSystemFileHandle>;
+        setFiles(gmeFiles);
+      });
+  }, [dirHandle, setFiles]);
   return {
     files,
-    reloadFiles: () => {
-      dirHandle &&
-        getDirectoryEntries(dirHandle).then((entries) => {
-          const gmeFiles = entries.filter(
-            (entry) =>
-              entry.kind === 'file' &&
-              entry.name.split('.').pop() === 'gme' &&
-              entry.name !== 'Stickerbogen_Starterset.gme' &&
-              entry.name !== 'Schnellstart-Anleitung.gme'
-          ) as Array<FileSystemFileHandle>;
-          setFiles(gmeFiles);
-        });
-    },
+    reloadFiles,
   };
 };
 

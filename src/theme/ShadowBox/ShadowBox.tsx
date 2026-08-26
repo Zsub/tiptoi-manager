@@ -8,7 +8,7 @@ import styles from './ShadowBox.module.css';
 const ShadowBox: React.FC<{
   title?: string;
   children?: React.JSX.Element | React.JSX.Element[] | string;
-  close: Function;
+  close: () => void;
   size?: 'large' | 'small';
   className?: string;
   preventClose?: boolean;

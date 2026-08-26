@@ -33,7 +33,7 @@ export const MyTiptoisContextProvider: React.FC<{
         setState(STATE.SUCCESS);
       })
       .catch(() => setState(STATE.ERROR));
-  }, [fileKeys]);
+  }, [fileKeys, getFile]);
 
   return (
     <MyTiptoisContext.Provider value={{ state, products }}>

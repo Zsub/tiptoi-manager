@@ -11,7 +11,6 @@ const FieldCheckbox: React.FC<{
   label: string;
   name: string;
   id: string;
-  type?: string;
   checked: boolean;
   [key: string]: any;
 }> = ({
@@ -21,7 +20,6 @@ const FieldCheckbox: React.FC<{
   label,
   name,
   id,
-  type = 'text',
   checked,
   ...props
 }) => (
