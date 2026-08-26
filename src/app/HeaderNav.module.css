@@ -12,28 +12,6 @@
   margin-left: var(--space-grid-half);
 }
 
-/* Temporary catalog language picker - replaced by the sortable multi-select. */
-.catalogLanguage {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-grid-quarter, 0.25rem);
-  font-size: 0.8rem;
-}
-
-.label {
-  white-space: nowrap;
-}
-
-.select {
-  font: inherit;
-  padding: 0.1rem 0.2rem;
-  border: 1px solid currentColor;
-  border-radius: 0.2rem;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-}
-
 .content {
   & > * {
     & + * {
