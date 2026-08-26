@@ -106,6 +106,19 @@ const FileFinderInstall: React.FC<{
     []
   );
 
+  // Picking a language must invalidate the in-flight/previous download and
+  // disable the Install button in the SAME commit as the selection change.
+  // Doing this only in the effect below would leave a render in between where
+  // `gameFile`/`product` already point at the new language but `downloaded`
+  // (and therefore the enabled Install button) still reflects the old one.
+  const selectLocale = (locale: Locale) => {
+    requestIdRef.current += 1;
+    setSelectedLocale(locale);
+    setDownloaded(null);
+    setDone(false);
+    setPending(true);
+  };
+
   React.useEffect(() => {
     if (!gameFile) return;
     if (alreadyInstalled) {
@@ -161,7 +174,7 @@ const FileFinderInstall: React.FC<{
                   value={locale}
                   label={languageLabel(locale)}
                   checked={selectedLocale === locale}
-                  onChange={() => setSelectedLocale(locale)}
+                  onChange={() => selectLocale(locale)}
                 />
               ))}
             </div>
