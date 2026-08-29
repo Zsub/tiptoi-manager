@@ -9,7 +9,6 @@ import { defineConfig } from 'vite';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 import app from './app.json';
 
@@ -54,6 +53,9 @@ export default defineConfig({
       ],
     },
   },
+  // Vite 8 resolves tsconfig `paths` natively, which replaces the
+  // vite-tsconfig-paths plugin (@theme, @app/*, @utils/*).
+  resolve: { tsconfigPaths: true },
   server: {
     https:
       process.env.SSL_KEY && process.env.SSL_CRT
@@ -66,7 +68,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    tsconfigPaths(),
     svgr({
       // vite-plugin-svgr 4 dropped `exportAsDefault` and changed two defaults
       // at once: it only transforms `*.svg?react` now, and the default export
