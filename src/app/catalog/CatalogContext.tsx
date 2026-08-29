@@ -45,7 +45,7 @@ const initialLocale = (): Locale => {
     const cookie = cookies.get(COOKIE_NAME);
     const iso = getLanguageISO(cookie || '');
     return isAvailableLocale(iso) ? iso : DEFAULT_LOCALE;
-  } catch (e) {
+  } catch {
     return DEFAULT_LOCALE;
   }
 };
@@ -228,7 +228,7 @@ export const CatalogContextProvider: React.FC<{
       return persisted.length === 0
         ? [initialLocale()]
         : sanitizeLocales(persisted);
-    } catch (e) {
+    } catch {
       return [initialLocale()];
     }
   });
@@ -253,7 +253,7 @@ export const CatalogContextProvider: React.FC<{
     LANGUAGES.forEach(({ code }) => {
       try {
         window.localStorage.removeItem(`catalog-${code}`);
-      } catch (e) {
+      } catch {
         // Storage disabled - nothing to clean up.
       }
     });
@@ -282,7 +282,7 @@ export const CatalogContextProvider: React.FC<{
       await setCatalogDB(catalogStorageKey(locale), catalog);
       setCatalogs((current) => ({ ...current, [locale]: catalog }));
       setStateByLang((current) => ({ ...current, [locale]: STATE.SUCCESS }));
-    } catch (e) {
+    } catch {
       requestedLanguages.current = requestedLanguages.current.filter(
         (requested) => requested !== locale
       );
