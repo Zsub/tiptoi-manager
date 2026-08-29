@@ -63,7 +63,11 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     svgr({
-      exportAsDefault: true,
+      // vite-plugin-svgr 4 dropped `exportAsDefault` and made the URL the
+      // default export. Icon.tsx and SVG.tsx render `<LoadedIcon />`, so the
+      // component has to stay the default - and `declare module '*.svg'`
+      // types it as `any`, meaning tsc would not catch the difference.
+      svgrOptions: { exportType: 'default' },
     }),
     VitePWA({
       registerType: 'autoUpdate',
