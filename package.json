@@ -20,7 +20,7 @@
     "@floating-ui/react-dom": "^2.1.9",
     "@types/wicg-file-system-access": "^2020.9.6",
     "cookies-ts": "^1.0.5",
-    "idb": "^7.1.1",
+    "idb": "^8.0.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-intl": "^10.1.24"
