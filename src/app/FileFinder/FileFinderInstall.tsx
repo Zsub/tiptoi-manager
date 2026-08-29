@@ -60,6 +60,7 @@ const FileFinderInstall: React.FC<{
   // through a ref - would make the callback below (and the effect that
   // depends on it) re-run far more often than the language actually changes.
   const setFileRef = React.useRef(setFile);
+  // eslint-disable-next-line react-hooks/refs -- deliberate mirror, see comment above: through an effect the ref would lag a render and re-fire the download
   setFileRef.current = setFile;
 
   // Bumped on every download attempt so a response that lands after the user
@@ -125,6 +126,7 @@ const FileFinderInstall: React.FC<{
       // Discard any still in-flight download for a previously selected
       // language - it can no longer be allowed to overwrite this state.
       requestIdRef.current += 1;
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- resets install state when the selected language changes; needs catalog data to exercise, so left as-is rather than rewritten unverified
       setPending(false);
       setDownloaded(null);
       setDone(true);

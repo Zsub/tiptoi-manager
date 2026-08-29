@@ -42,6 +42,7 @@ const FileFinder: React.FC<{ className?: string }> = ({ className = '' }) => {
   const online = useOnline();
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncs checked categories to the catalog; needs catalog data to exercise, so left as-is rather than rewritten unverified
     setCheckedCategories(productCategories);
   }, [productCategories]);
 
@@ -53,6 +54,7 @@ const FileFinder: React.FC<{ className?: string }> = ({ className = '' }) => {
       languageFilter !== ANY_LANGUAGE &&
       !selectedLanguages.includes(languageFilter)
     ) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- resets the filter when its language is deselected; see comment above
       setLanguageFilter(ANY_LANGUAGE);
     }
   }, [selectedLanguages, languageFilter]);

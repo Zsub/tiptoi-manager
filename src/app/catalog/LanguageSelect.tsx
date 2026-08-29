@@ -42,6 +42,7 @@ const LanguageSelect: React.FC<{ className?: string }> = ({
   // Mirrors of state read from event handlers / effects that must not close
   // over a stale render (pointer and keyboard listeners, cleanup on unmount).
   const dragRef = React.useRef<DragState | null>(null);
+  // eslint-disable-next-line react-hooks/refs -- deliberate mirror: pointer/keyboard listeners and unmount cleanup must not close over a stale drag state
   dragRef.current = drag;
   const rowRefs = React.useRef<Map<Locale, HTMLLIElement>>(new Map());
   const handleElRef = React.useRef<HTMLSpanElement | null>(null);

@@ -22,12 +22,10 @@ const ShadowBox: React.FC<{
 }) => {
   const [show, setShow] = React.useState<boolean>(false);
 
-  React.useEffect(() => {
-    setShow(true);
-    return () => {
-      setShow(false);
-    };
-  }, []);
+  // Drives the mount fade-in. `show` is also what onClose animates back out,
+  // so the state cannot simply be replaced with a CSS entry animation.
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- one extra render on open, in exchange for the open and close transitions sharing one flag
+  React.useEffect(() => setShow(true), []);
 
   const onClose = () => {
     if (preventClose) {

@@ -20,19 +20,17 @@ const IntlContext = React.createContext<{
 export const IntlContextProvider: React.FC<{
   children: React.ReactElement;
 }> = ({ children }) => {
+  // Read the persisted language in the initialiser rather than an effect, so
+  // the first paint is already in the right language instead of rendering the
+  // default and immediately re-rendering over it.
   const [language, setLanguage] = React.useState<string>(
-    Object.keys(MESSAGES)[0]
+    () => cookies.get(COOKIE_NAME) || Object.keys(MESSAGES)[0]
   );
 
   const messages = React.useMemo<Record<string, string>>(
     () => MESSAGES[language],
     [language]
   );
-
-  React.useEffect(() => {
-    const cookie = cookies.get(COOKIE_NAME);
-    cookie && setLanguage(cookie);
-  }, []);
 
   return (
     <IntlContext.Provider

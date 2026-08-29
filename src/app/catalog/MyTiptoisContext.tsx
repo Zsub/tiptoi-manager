@@ -26,6 +26,7 @@ export const MyTiptoisContextProvider: React.FC<{
   const [products, setProducts] = React.useState<Array<SavedProduct>>([]);
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- flags the load as in-flight when the effect re-runs on fileKeys change, which an initial value cannot cover
     setState(STATE.LOADING);
     Promise.all(fileKeys.map((key) => getFile(key)))
       .then((products) => {

@@ -47,12 +47,6 @@ export const StorageContextProvider: React.FC<{
   const [usedSpace, setUsedSpace] = React.useState<number>(0);
   const [fileKeys, setFileKeys] = React.useState<Array<string>>([]);
 
-  React.useEffect(() => {
-    void checkSpace();
-    getGmeKeys().then((keys) => setFileKeys(keys));
-    navigator.storage.persisted().then((persisted) => setPersisted(persisted));
-  }, []);
-
   const persist: () => Promise<void> = () =>
     navigator.storage
       .persist()
@@ -67,6 +61,16 @@ export const StorageContextProvider: React.FC<{
       setTotalSpace(estimate.quota);
       setUsedSpace(estimate.usage);
     });
+
+  // Declared after checkSpace/persist rather than at the top of the component:
+  // reaching backwards to a `const` defined further down works only because
+  // effects run after render, and would break the moment this needs to run
+  // any earlier.
+  React.useEffect(() => {
+    void checkSpace();
+    getGmeKeys().then((keys) => setFileKeys(keys));
+    navigator.storage.persisted().then((persisted) => setPersisted(persisted));
+  }, []);
 
   const setLocalItem = async (key: string, value: string) => {
     !persisted && (await persist());

@@ -37,16 +37,13 @@ export default tseslint.config(
         { allowShortCircuit: true, allowTernary: true },
       ],
 
-      // eslint-plugin-react-hooks 7 bundles the React Compiler rule set, which
-      // is far stricter than the rules-of-hooks/exhaustive-deps pair this
-      // project was linting against under v4. It reports 11 real findings
-      // across the context providers and Tooltip. Those are behavioural fixes
-      // that deserve their own change with their own verification, not a
-      // ride-along in a dependency bump - so they stay off here and are
-      // tracked separately.
-      'react-hooks/set-state-in-effect': 0,
-      'react-hooks/refs': 0,
-      'react-hooks/immutability': 0,
+      // The React Compiler rules that eslint-plugin-react-hooks 7 bundles are
+      // ON. They were switched off wholesale during the ESLint 10 upgrade
+      // (8a26e9d) because they reported 11 findings at once; those have since
+      // been worked through. Three were fixed outright, and the rest carry
+      // per-site eslint-disable comments explaining why the existing code is
+      // deliberate. Leaving the rules enabled is the point: new violations get
+      // caught, rather than hiding behind a blanket off switch.
     },
   },
   {

@@ -72,6 +72,7 @@ const Tooltip: React.FC<{
 
   return (
     <div
+      // eslint-disable-next-line react-hooks/refs -- false positive: refs.setFloating is Floating UI's ref-setter callback, not a ref read
       ref={refs.setFloating}
       className={cn(styles.tooltip, { [styles.tooltipShow]: show })}
       role="tooltip"
