@@ -63,10 +63,18 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     svgr({
-      // vite-plugin-svgr 4 dropped `exportAsDefault` and made the URL the
-      // default export. Icon.tsx and SVG.tsx render `<LoadedIcon />`, so the
-      // component has to stay the default - and `declare module '*.svg'`
-      // types it as `any`, meaning tsc would not catch the difference.
+      // vite-plugin-svgr 4 dropped `exportAsDefault` and changed two defaults
+      // at once: it only transforms `*.svg?react` now, and the default export
+      // became the URL. src/theme/SVG/icons.ts imports plain `.svg` paths and
+      // Icon.tsx/SVG.tsx render `<LoadedIcon />`, so both have to be undone -
+      // widen `include` to every .svg, and force the component back to being
+      // the default export.
+      //
+      // Nothing catches this if it regresses: `declare module '*.svg'` in
+      // src/@types/global.d.ts types these as `any`, so tsc, eslint and the
+      // build all stay green while every icon renders as a data-URI string
+      // and React throws InvalidCharacterError at runtime.
+      include: '**/*.svg',
       svgrOptions: { exportType: 'default' },
     }),
     VitePWA({
