@@ -239,7 +239,7 @@ export const CatalogContextProvider: React.FC<{
     // Persisting must never break the selection itself (localStorage throws
     // when the quota is exhausted or storage is blocked).
     setLocalItem(SELECTED_LANGUAGES_STORAGE_KEY, JSON.stringify(next)).catch(
-      () => undefined
+      (): void => undefined
     );
   };
 

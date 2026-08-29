@@ -43,6 +43,6 @@ export const dbPromise = openDB<TipToiDB>(IDB_NAME, 2, {
   blocking() {
     // This tab is holding an older version open while another tab upgrades.
     // Close our connection so the other tab can proceed.
-    dbPromise.then((db) => db.close()).catch(() => undefined);
+    dbPromise.then((db) => db.close()).catch((): void => undefined);
   },
 });
