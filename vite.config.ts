@@ -13,7 +13,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import app from './app.json';
 
-dotenv.config();
+// dotenv 17 prints an "injected env" banner on every call; quiet restores the
+// silent behaviour of 16, so `npm run dev` and `npm run build` stay readable.
+dotenv.config({ quiet: true });
 
 const icons = [
   ...app.iconSizes.map((size) => ({
