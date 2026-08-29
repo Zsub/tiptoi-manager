@@ -1,5 +1,5 @@
+import { autoUpdate, flip, shift, useFloating } from '@floating-ui/react-dom';
 import React, { MutableRefObject } from 'react';
-import { usePopper } from 'react-popper';
 
 import cn from '@utils/classnames.ts';
 
@@ -21,14 +21,14 @@ const Tooltip: React.FC<{
   placement = 'bottom',
 }) => {
   const [show, setShow] = React.useState<boolean>(false);
-  const popperRef = React.useRef<HTMLDivElement>(null);
 
-  const {
-    styles: popperStyles,
-    attributes,
-    //update,
-  } = usePopper(tooltipRef?.current, popperRef?.current, {
+  // `flip` and `shift` reproduce what Popper applied by default. There is
+  // deliberately no `offset` middleware: the gap between trigger and bubble
+  // comes from `.tooltipInner`'s margin-top, as it always has.
+  const { refs, floatingStyles } = useFloating({
     placement,
+    middleware: [flip(), shift()],
+    whileElementsMounted: autoUpdate,
   });
 
   const id: string = React.useMemo(() => {
@@ -43,41 +43,45 @@ const Tooltip: React.FC<{
     tooltipRef?.current?.setAttribute('aria-describedby', id);
   }, [tooltipRef, id]);
 
-  const addListeners = (element: HTMLElement) => {
-    if (element) {
-      element.addEventListener('mouseover', () => setShow(true));
-      element.addEventListener('mouseleave', () => setShow(false));
-    }
-  };
-
-  const removeListeners = (element: HTMLElement) => {
-    if (element) {
-      element.removeEventListener('mouseover', () => setShow(true));
-      element.removeEventListener('mouseleave', () => setShow(false));
-    }
-  };
+  // Callers pass the trigger as a ref to an element rendered *after* this one,
+  // so it is only populated once the tree has committed. Handing the element
+  // over from an effect is both correct and what keeps refs out of render.
+  React.useEffect(() => {
+    refs.setReference(tooltipRef?.current ?? null);
+  }, [refs, tooltipRef]);
 
   React.useEffect(() => {
     const element = customTriggerRef
       ? customTriggerRef?.current
       : tooltipRef?.current;
-    addListeners(element);
-    return () => removeListeners(element);
+    if (!element) return;
+
+    // These have to be the same function objects on the way out as on the way
+    // in - the previous implementation built fresh arrows for removal, so the
+    // listeners outlived every unmount.
+    const onEnter = () => setShow(true);
+    const onLeave = () => setShow(false);
+
+    element.addEventListener('mouseover', onEnter);
+    element.addEventListener('mouseleave', onLeave);
+    return () => {
+      element.removeEventListener('mouseover', onEnter);
+      element.removeEventListener('mouseleave', onLeave);
+    };
   }, [tooltipRef, customTriggerRef]);
 
   return (
     <div
-      ref={popperRef}
+      ref={refs.setFloating}
       className={cn(styles.tooltip, { [styles.tooltipShow]: show })}
       role="tooltip"
       id={id}
       aria-hidden={!show}
-      style={{ ...popperStyles.popper, ...(maxWidth ? { maxWidth } : {}) }}
-      {...attributes.popper}
+      style={{ ...floatingStyles, ...(maxWidth ? { maxWidth } : {}) }}
     >
       <div className={styles.tooltipInner}>
         {children}
-        <div className={styles.arrow} style={popperStyles.arrow} />
+        <div className={styles.arrow} />
       </div>
     </div>
   );

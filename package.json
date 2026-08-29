@@ -17,14 +17,13 @@
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
+    "@floating-ui/react-dom": "^2.1.9",
     "@types/wicg-file-system-access": "^2020.9.6",
     "cookies-ts": "^1.0.5",
     "idb": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-intl": "^6.4.6",
-    "react-popper": "^2.3.0"
+    "react-intl": "^6.4.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
