@@ -39,7 +39,7 @@ export const blobToString = async (
 
 export const stringToBlob = ([base64String, mimeType]: [
   base64Content,
-  mimeType
+  mimeType,
 ]) => {
   const binaryData = atob(base64String);
   const byteNumbers = new Array(binaryData.length);

@@ -32,7 +32,9 @@ export const LANGUAGES: ReadonlyArray<{
 ];
 
 /** The only locales that should ever be selectable in the UI. */
-export const AVAILABLE_LANGUAGES = LANGUAGES.filter(({ available }) => available);
+export const AVAILABLE_LANGUAGES = LANGUAGES.filter(
+  ({ available }) => available
+);
 
 export const DEFAULT_LOCALE: Locale = 'de_DE';
 

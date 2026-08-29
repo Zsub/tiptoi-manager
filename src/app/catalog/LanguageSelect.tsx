@@ -34,8 +34,7 @@ interface DragState {
 const LanguageSelect: React.FC<{ className?: string }> = ({
   className = '',
 }) => {
-  const { selectedLanguages, setSelectedLanguages, stateByLang } =
-    useCatalog();
+  const { selectedLanguages, setSelectedLanguages, stateByLang } = useCatalog();
 
   const [drag, setDrag] = React.useState<DragState | null>(null);
   const [announcement, setAnnouncement] = React.useState('');

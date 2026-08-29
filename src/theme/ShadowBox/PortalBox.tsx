@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { ShadowBox } from '../index';
 
 const Portal = ({ children }: { children?: React.JSX.Element }) =>

@@ -2,7 +2,9 @@
   fill: transparent;
   stroke: currentColor;
   stroke-width: 0.15em;
-  animation: loader-dash 2s ease infinite, loader-rotate 2s linear infinite;
+  animation:
+    loader-dash 2s ease infinite,
+    loader-rotate 2s linear infinite;
   width: 1em;
   height: 1em;
   margin-top: -0.5em;

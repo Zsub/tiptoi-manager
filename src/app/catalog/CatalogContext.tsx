@@ -206,12 +206,11 @@ export const CatalogContextProvider: React.FC<{
 }> = ({ children }) => {
   const { setLocalItem, getLocalItem } = useLocalStorage();
 
-  const [catalogs, setCatalogs] = React.useState<Partial<Record<Locale, Catalog>>>(
-    {}
-  );
-  const [stateByLang, setStateByLang] = React.useState<Record<Locale, STATE>>(
-    idleStateByLang
-  );
+  const [catalogs, setCatalogs] = React.useState<
+    Partial<Record<Locale, Catalog>>
+  >({});
+  const [stateByLang, setStateByLang] =
+    React.useState<Record<Locale, STATE>>(idleStateByLang);
   const [selectedLanguages, setSelectedLanguagesState] = React.useState<
     Array<Locale>
   >(() => {
@@ -374,29 +373,31 @@ export const CatalogContextProvider: React.FC<{
    * No registration order can fix that, so callers must handle >1 match;
    * `[0]` is a best guess (primary language first), never an identification.
    */
-  const productByGmeFileName: Record<string, Array<MergedProduct>> =
-    React.useMemo(() => {
-      const map: Record<string, Array<MergedProduct>> = {};
-      const register = (name: string, merged: MergedProduct) => {
-        const bucket = map[name] || (map[name] = []);
-        // The encoded basename and the raw fileName often coincide, so the
-        // same product would otherwise be listed twice in one bucket.
-        if (!bucket.some((candidate) => candidate.key === merged.key)) {
-          bucket.push(merged);
-        }
-      };
-      mergedProducts.forEach((merged) => {
-        Object.values(merged.byLang).forEach((entry) => {
-          (entry.product.gameFiles || []).forEach((gameFile) => {
-            if (!gameFile) return;
-            const fromUrl = gameFile.url ? gameFile.url.split('/').pop() : null;
-            if (fromUrl) register(fromUrl, merged);
-            if (gameFile.fileName) register(gameFile.fileName, merged);
-          });
+  const productByGmeFileName: Record<
+    string,
+    Array<MergedProduct>
+  > = React.useMemo(() => {
+    const map: Record<string, Array<MergedProduct>> = {};
+    const register = (name: string, merged: MergedProduct) => {
+      const bucket = map[name] || (map[name] = []);
+      // The encoded basename and the raw fileName often coincide, so the
+      // same product would otherwise be listed twice in one bucket.
+      if (!bucket.some((candidate) => candidate.key === merged.key)) {
+        bucket.push(merged);
+      }
+    };
+    mergedProducts.forEach((merged) => {
+      Object.values(merged.byLang).forEach((entry) => {
+        (entry.product.gameFiles || []).forEach((gameFile) => {
+          if (!gameFile) return;
+          const fromUrl = gameFile.url ? gameFile.url.split('/').pop() : null;
+          if (fromUrl) register(fromUrl, merged);
+          if (gameFile.fileName) register(gameFile.fileName, merged);
         });
       });
-      return map;
-    }, [mergedProducts]);
+    });
+    return map;
+  }, [mergedProducts]);
 
   const primaryLanguage: Locale = selectedLanguages[0] || DEFAULT_LOCALE;
 

@@ -45,8 +45,8 @@ const apiFetch = <T>({
             typeof data === 'string'
               ? data
               : data?.message
-              ? data.message
-              : data.toString()
+                ? data.message
+                : data.toString()
           );
         }
       })

@@ -60,7 +60,7 @@ export const usePenFiles = (): {
 
 export const useDirHandle = (): [
   FileSystemDirectoryHandle,
-  (handle: FileSystemDirectoryHandle) => void
+  (handle: FileSystemDirectoryHandle) => void,
 ] => {
   const { dirHandle, setDirHandle } = React.useContext(FilesContext);
   return [dirHandle, setDirHandle];

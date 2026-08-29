@@ -7,8 +7,8 @@ import FileFinderForm, {
 } from '@app/FileFinder/FileFinderForm.tsx';
 import FileFinderProduct from '@app/FileFinder/FileFinderProduct.tsx';
 import {
-  MergedProduct,
   STATE as CATALOG_STATE,
+  MergedProduct,
   useCatalog,
 } from '@app/catalog/CatalogContext.tsx';
 import { Locale } from '@app/catalog/languages.ts';
