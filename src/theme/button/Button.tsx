@@ -46,11 +46,11 @@ const Button: React.FC<{
     <span className={styles.bkg} />
     <Loader className={styles.loader} />
     {Boolean(icon) && !iconRight && (
-      <Icon className={cn(styles.icon, styles.iconLeft)} icon={icon} />
+      <Icon className={cn(styles.icon, styles.iconLeft)} icon={icon!} />
     )}
     {Boolean(children) && <span className={styles.content}>{children}</span>}
     {Boolean(icon) && iconRight && (
-      <Icon className={cn(styles.icon, styles.iconRight)} icon={icon} />
+      <Icon className={cn(styles.icon, styles.iconRight)} icon={icon!} />
     )}
   </button>
 );

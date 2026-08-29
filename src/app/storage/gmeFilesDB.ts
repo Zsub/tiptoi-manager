@@ -18,7 +18,7 @@ export interface SavedProduct {
 
 type ValueType = SavedProduct;
 
-export const get = async (key: string): Promise<ValueType> =>
+export const get = async (key: string): Promise<ValueType | undefined> =>
   (await dbPromise).get(IDB_STORE_FILES, key);
 
 export const set = async (key: string, val: ValueType) =>
@@ -33,7 +33,7 @@ export const clear = async (): Promise<void> =>
 export const getKeys = async (): Promise<Array<string>> =>
   (await dbPromise).getAllKeys(IDB_STORE_FILES);
 
-export const getCatalog = async (key: string): Promise<Catalog> =>
+export const getCatalog = async (key: string): Promise<Catalog | undefined> =>
   (await dbPromise).get(IDB_STORE_CATALOG, key);
 
 export const setCatalog = async (key: string, val: Catalog) =>

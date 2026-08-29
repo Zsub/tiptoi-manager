@@ -17,7 +17,7 @@ const NAVIGATION: Record<Menu, string> = {
 };
 
 const HeaderNav = ({ className = '' }: { className?: string }) => {
-  const [activeBox, setActiveBox] = React.useState<Menu>(null);
+  const [activeBox, setActiveBox] = React.useState<Menu | null>(null);
 
   return (
     <React.Fragment>

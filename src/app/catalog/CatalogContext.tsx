@@ -184,10 +184,10 @@ const collectAmbiguousGameFileIds = (
  * response must never be cached, otherwise the empty catalog is served from
  * IndexedDB forever, since there is no cache expiry.
  */
-const isUsableCatalog = (catalog: Catalog): boolean =>
+const isUsableCatalog = (catalog: Catalog | undefined): catalog is Catalog =>
   Boolean(catalog) &&
-  Array.isArray(catalog.products) &&
-  catalog.products.length > 0;
+  Array.isArray(catalog?.products) &&
+  catalog!.products.length > 0;
 
 const CatalogContext = React.createContext<CatalogContextValue>({
   state: STATE.IDLE,
@@ -326,7 +326,7 @@ export const CatalogContextProvider: React.FC<{
       (catalog.products || []).forEach((product) => {
         const gameFile = representativeGameFile(product);
         const gameFileId = gameFile ? gameFile.id : null;
-        const ambiguous = Boolean(gameFileId) && ambiguousIds.has(gameFileId);
+        const ambiguous = gameFileId !== null && ambiguousIds.has(gameFileId);
         const entry: LocalisedEntry = { product, gameFile, locale };
 
         // Only a game file id that resolves to exactly one product in every
@@ -411,8 +411,11 @@ export const CatalogContextProvider: React.FC<{
   const productCategories: Array<string> = React.useMemo(
     () =>
       products
-        .reduce((acc, product) => [...acc, ...(product.categories || [])], [])
-        .reduce(
+        .reduce<Array<string>>(
+          (acc, product) => [...acc, ...(product.categories || [])],
+          []
+        )
+        .reduce<Array<string>>(
           (acc, category) =>
             acc.includes(category) ? acc : [...acc, category],
           []
@@ -425,8 +428,11 @@ export const CatalogContextProvider: React.FC<{
       products.reduce(
         (acc, product, index) => ({
           ...acc,
-          ...(product.gameFiles || []).reduce(
-            (acc, file) => ({ ...acc, [file.url.split('/').pop()]: index }),
+          ...(product.gameFiles || []).reduce<Record<string, number>>(
+            (acc, file) => {
+              const name = file.url.split('/').pop();
+              return name ? { ...acc, [name]: index } : acc;
+            },
             {}
           ),
         }),

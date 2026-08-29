@@ -30,7 +30,11 @@ const FileFinderProduct: React.FC<{
   );
 
   const installedFileNames = React.useMemo<Array<string>>(
-    () => files.reduce((acc, file) => [...acc, encodeURI(file.name)], []),
+    () =>
+      files.reduce<Array<string>>(
+        (acc, file) => [...acc, encodeURI(file.name)],
+        []
+      ),
     [files]
   );
 
@@ -44,7 +48,9 @@ const FileFinderProduct: React.FC<{
       const gameFile = merged.byLang[locale]?.gameFile;
       if (!gameFile) return false;
       const gameFileName = gameFile.url.split('/').pop();
-      return installedFileNames.includes(gameFileName);
+      return (
+        Boolean(gameFileName) && installedFileNames.includes(gameFileName!)
+      );
     });
   }, [languages, merged, installedFileNames]);
 

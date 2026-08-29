@@ -5,8 +5,8 @@ import { getDirectoryEntries } from '@utils/fileSystem';
 interface ContextI {
   files: Array<FileSystemFileHandle>;
   setFiles: (files: Array<FileSystemFileHandle>) => void;
-  dirHandle: FileSystemDirectoryHandle;
-  setDirHandle: (handle: FileSystemDirectoryHandle) => void;
+  dirHandle: FileSystemDirectoryHandle | null;
+  setDirHandle: (handle: FileSystemDirectoryHandle | null) => void;
 }
 
 const FilesContext = React.createContext<ContextI>({
@@ -18,7 +18,7 @@ const FilesContext = React.createContext<ContextI>({
 
 export const FilesContextProvider = ({ children }: { children?: any }) => {
   const [dirHandle, setDirHandle] =
-    React.useState<FileSystemDirectoryHandle>(null);
+    React.useState<FileSystemDirectoryHandle | null>(null);
   const [files, setFiles] = React.useState<Array<FileSystemFileHandle>>([]);
   return (
     <FilesContext.Provider
@@ -59,8 +59,8 @@ export const usePenFiles = (): {
 };
 
 export const useDirHandle = (): [
-  FileSystemDirectoryHandle,
-  (handle: FileSystemDirectoryHandle) => void,
+  FileSystemDirectoryHandle | null,
+  (handle: FileSystemDirectoryHandle | null) => void,
 ] => {
   const { dirHandle, setDirHandle } = React.useContext(FilesContext);
   return [dirHandle, setDirHandle];

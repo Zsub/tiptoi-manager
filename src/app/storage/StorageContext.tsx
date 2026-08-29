@@ -16,13 +16,13 @@ interface Space {
 
 interface Files {
   fileKeys: Array<string>;
-  getFile: (key: string) => Promise<SavedProduct>;
+  getFile: (key: string) => Promise<SavedProduct | undefined>;
   setFile: (key: string, file: SavedProduct) => Promise<void>;
 }
 
 interface LocalStorage {
   setLocalItem: (key: string, value: string) => Promise<void>;
-  getLocalItem: (key: string) => string;
+  getLocalItem: (key: string) => string | null;
 }
 
 interface Context extends Files, LocalStorage, Space {}
@@ -33,9 +33,9 @@ const StorageContext = React.createContext<Context>({
   persisted: false,
   persist: () => new Promise((resolve) => resolve()),
   setLocalItem: () => new Promise((resolve) => resolve()),
-  getLocalItem: () => '',
+  getLocalItem: () => null,
   fileKeys: [],
-  getFile: () => new Promise((resolve) => resolve(null)),
+  getFile: () => new Promise((resolve) => resolve(undefined)),
   setFile: () => new Promise((resolve) => resolve()),
 });
 
@@ -58,8 +58,8 @@ export const StorageContextProvider: React.FC<{
 
   const checkSpace: () => Promise<void> = () =>
     navigator.storage.estimate().then((estimate) => {
-      setTotalSpace(estimate.quota);
-      setUsedSpace(estimate.usage);
+      setTotalSpace(estimate.quota ?? 0);
+      setUsedSpace(estimate.usage ?? 0);
     });
 
   // Declared after checkSpace/persist rather than at the top of the component:
@@ -78,8 +78,8 @@ export const StorageContextProvider: React.FC<{
     await checkSpace();
   };
 
-  const getLocalItem = (key: string): string =>
-    window.localStorage.getItem(key) || null;
+  const getLocalItem = (key: string): string | null =>
+    window.localStorage.getItem(key);
 
   const getFile = React.useCallback((key: string) => getGme(key), []);
 

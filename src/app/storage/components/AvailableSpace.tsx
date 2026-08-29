@@ -79,7 +79,7 @@ const AvailableSpace: React.FC<{ className?: string }> = ({
         </PortalBox>
       )}
       <Button
-        icon={persisted ? null : 'alert-outline'}
+        icon={persisted ? undefined : 'alert-outline'}
         iconRight
         color="black"
         layout="ghost"

@@ -38,6 +38,7 @@ const PenFiles: React.FC<{
             <Button
               loading={deletePending}
               onClick={() => {
+                if (!dirHandle) return;
                 setDeletePending(true);
                 deleteFile(dirHandle, file.name).then(() => {
                   setDeletePending(false);

@@ -1,5 +1,5 @@
 import { autoUpdate, flip, shift, useFloating } from '@floating-ui/react-dom';
-import React, { MutableRefObject } from 'react';
+import React, { RefObject } from 'react';
 
 import cn from '@utils/classnames.ts';
 
@@ -9,8 +9,11 @@ let i = 0;
 
 const Tooltip: React.FC<{
   children: any;
-  tooltipRef: MutableRefObject<HTMLElement>;
-  triggerRef?: MutableRefObject<HTMLElement>;
+  // React 19's useRef returns RefObject<T | null>, so callers cannot satisfy
+  // MutableRefObject<HTMLElement> - and the component already handles the ref
+  // being empty on first render.
+  tooltipRef: RefObject<HTMLElement | null>;
+  triggerRef?: RefObject<HTMLElement | null>;
   maxWidth?: number;
   placement?: 'bottom' | 'top' | 'left' | 'right';
 }> = ({

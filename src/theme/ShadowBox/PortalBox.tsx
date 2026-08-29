@@ -4,7 +4,12 @@ import ReactDOM from 'react-dom';
 import { ShadowBox } from '../index';
 
 const Portal = ({ children }: { children?: React.JSX.Element }) =>
-  ReactDOM.createPortal(children, document.querySelector('#shadowbox'));
+  ReactDOM.createPortal(
+    children,
+    // index.html always ships this container; a missing one is a
+    // build-integrity problem, not a runtime branch to handle.
+    document.querySelector('#shadowbox')!
+  );
 
 export default ({
   children,

@@ -26,7 +26,7 @@ const MyTiptoisProduct: React.FC<{
     }
     const parts = product.audioFile.url.split('/');
     const gameFileName = parts[parts.length - 1];
-    const installedFiles = files.reduce(
+    const installedFiles = files.reduce<Array<string>>(
       (acc, file) => [...acc, encodeURI(file.name)],
       []
     );
@@ -34,6 +34,7 @@ const MyTiptoisProduct: React.FC<{
   }, [product.audioFile, files]);
 
   const write = async () => {
+    if (!dirHandle) return;
     setPending(true);
     const blob = stringToBlob(product.audioFile.fileContent);
     writeFile(dirHandle, product.audioFile.fileName, blob)

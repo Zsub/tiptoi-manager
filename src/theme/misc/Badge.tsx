@@ -8,7 +8,7 @@ const Badge: React.FC<{
   className?: string;
   text: string;
   type?: 'message' | 'success' | 'error';
-}> = ({ className, text, type }) => {
+}> = ({ className = '', text, type }) => {
   return (
     <span
       className={cn(className, styles.root, {

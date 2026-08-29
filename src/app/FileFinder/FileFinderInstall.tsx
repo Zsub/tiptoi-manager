@@ -31,7 +31,7 @@ const FileFinderInstall: React.FC<{
   const { setFile } = useGmeFileStore();
   const [pending, setPending] = React.useState<boolean>(false);
   const [done, setDone] = React.useState<boolean>(false);
-  const [downloaded, setDownloaded] = React.useState<Blob>(null);
+  const [downloaded, setDownloaded] = React.useState<Blob | null>(null);
   const tooltipRef = React.useRef<HTMLButtonElement>(null);
 
   const languages = React.useMemo(
@@ -139,6 +139,9 @@ const FileFinderInstall: React.FC<{
   }, [gameFile, product, alreadyInstalled, downloadFile]);
 
   const write = () => {
+    // The install button is only rendered with a pen connected and a file
+    // downloaded, but nothing enforced that here.
+    if (!dirHandle || !gameFile || !downloaded) return;
     setPending(true);
     writeFile(dirHandle, gameFile.fileName, downloaded)
       .then(() => {

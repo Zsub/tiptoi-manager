@@ -30,7 +30,8 @@ export const MyTiptoisContextProvider: React.FC<{
     setState(STATE.LOADING);
     Promise.all(fileKeys.map((key) => getFile(key)))
       .then((products) => {
-        setProducts(products);
+        // A key can disappear between listing and reading it back.
+        setProducts(products.filter((p): p is SavedProduct => Boolean(p)));
         setState(STATE.SUCCESS);
       })
       .catch(() => setState(STATE.ERROR));
