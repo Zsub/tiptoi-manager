@@ -294,7 +294,7 @@ export const CatalogContextProvider: React.FC<{
     selectedLanguages.forEach((locale) => {
       if (requestedLanguages.current.includes(locale)) return;
       requestedLanguages.current = [...requestedLanguages.current, locale];
-      loadCatalog(locale);
+      void loadCatalog(locale);
     });
   }, [selectedLanguages]);
 

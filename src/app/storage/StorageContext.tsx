@@ -48,7 +48,7 @@ export const StorageContextProvider: React.FC<{
   const [fileKeys, setFileKeys] = React.useState<Array<string>>([]);
 
   React.useEffect(() => {
-    checkSpace();
+    void checkSpace();
     getGmeKeys().then((keys) => setFileKeys(keys));
     navigator.storage.persisted().then((persisted) => setPersisted(persisted));
   }, []);

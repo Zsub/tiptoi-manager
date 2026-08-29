@@ -130,7 +130,7 @@ const FileFinderInstall: React.FC<{
       setDone(true);
       return;
     }
-    downloadFile(gameFile, product);
+    void downloadFile(gameFile, product);
     // `gameFile`/`product` already change whenever `selectedLocale` does (both
     // are looked up from `merged.byLang` by it), so listing them - rather
     // than `selectedLocale` itself - is what the effect actually reacts to.
