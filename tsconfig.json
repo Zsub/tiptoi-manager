@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -24,28 +20,16 @@
     "strictNullChecks": false,
     "baseUrl": "./",
     "paths": {
-      "@app/*": [
-        "src/app/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@theme": [
-        "src/theme/index.ts"
-      ]
+      "@app/*": ["src/app/*"],
+      "@utils/*": ["src/utils/*"],
+      "@theme": ["src/theme/index.ts"]
     },
-    "typeRoots": [
-      "node_modules/@types",
-      "src/@types"
-    ]
+    "typeRoots": ["node_modules/@types", "src/@types"]
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
   ]
 }
-

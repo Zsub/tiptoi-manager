@@ -4,15 +4,6 @@
   "description": "A software to manage tiptoi audio files",
   "color": "#106672",
   "colorbkg": "#eaeaea",
-  "iconImages": [
-    "public/fav/icon/icon.svg"
-  ],
-  "iconSizes": [
-    96,
-    128,
-    192,
-    256,
-    384,
-    512
-  ]
+  "iconImages": ["public/fav/icon/icon.svg"],
+  "iconSizes": [96, 128, 192, 256, 384, 512]
 }
