@@ -10,7 +10,7 @@ import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
-import app from './app.json';
+import app from './app.json' with { type: 'json' };
 
 // dotenv 17 prints an "injected env" banner on every call; quiet restores the
 // silent behaviour of 16, so `npm run dev` and `npm run build` stay readable.

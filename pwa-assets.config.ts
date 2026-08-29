@@ -1,4 +1,4 @@
-import app from './app.json';
+import app from './app.json' with { type: 'json' };
 
 // Plain object rather than the package's `defineConfig` helper, which is
 // type-only: @vite-pwa/assets-generator is no longer a dependency (it pulled

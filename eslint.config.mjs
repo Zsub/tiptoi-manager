@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 // Flat config, required from ESLint 9 onwards. Kept as `.mjs` rather than
 // `.js` deliberately: package.json has no `"type": "module"` (adding one would
-// break src/theme/SVG/generate.js, which is CommonJS), and `.mjs` lets this
+// break src/theme/SVG/generate.cjs's siblings), and `.mjs` lets this
 // file use ESM without that.
 export default tseslint.config(
   { ignores: ['dist', 'dev-dist', 'public/sw.js'] },
@@ -51,10 +51,10 @@ export default tseslint.config(
   },
   {
     // Node scripts and config files, not browser code.
-    files: ['*.config.{js,ts,mjs}', 'src/theme/SVG/generate.js'],
+    files: ['*.config.{js,ts,mjs,cjs}', 'src/theme/SVG/generate.cjs'],
     languageOptions: { globals: globals.node },
     rules: {
-      // generate.js is a CommonJS script run by node directly, not bundled.
+      // generate.cjs is a CommonJS script run by node directly, not bundled.
       '@typescript-eslint/no-require-imports': 0,
     },
   }

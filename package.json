@@ -67,5 +67,6 @@
     ],
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true
-  }
+  },
+  "type": "module"
 }

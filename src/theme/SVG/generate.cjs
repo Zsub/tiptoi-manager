@@ -31,7 +31,7 @@ fs.readdir(svgFolderPath, (err, files) => {
     .join(',\n');
 
   const contents = [
-    '/* This file was generated automatically with the ./generate.js script */',
+    '/* This file was generated automatically with the ./generate.cjs script */',
     importStatements.join('\n'),
     `const icons = {\n${iconsContent}\n};`,
     'export type IconType = keyof typeof icons;',

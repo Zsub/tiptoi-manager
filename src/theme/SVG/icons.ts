@@ -1,4 +1,4 @@
-/* This file was generated automatically with the ./generate.js script */
+/* This file was generated automatically with the ./generate.cjs script */
 import alertOutline from './icons/alert-outline.svg';
 import download from './icons/download.svg';
 import pen from './icons/pen.svg';
