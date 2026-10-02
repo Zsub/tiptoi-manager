@@ -1,6 +1,7 @@
 import { Button, Tooltip } from '@theme';
 import React from 'react';
 
+import { MergedProduct } from '@app/catalog/CatalogContext.tsx';
 import { useDirHandle, usePenFiles } from '@app/FilesContext.tsx';
 import { SavedProduct } from '@app/storage/gmeFilesDB.ts';
 
@@ -14,7 +15,8 @@ import styles from './MyTiptoisProduct.module.css';
 const MyTiptoisProduct: React.FC<{
   className?: string;
   product: SavedProduct;
-}> = ({ className = '', product }) => {
+  merged?: MergedProduct;
+}> = ({ className = '', product, merged }) => {
   const { files } = usePenFiles();
   const tooltipRef = React.useRef<HTMLButtonElement>(null);
   const [dirHandle] = useDirHandle();
