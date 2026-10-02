@@ -31,8 +31,6 @@ function getToken()
 
     $response = curl_exec($curl);
 
-    curl_close($curl);
-
     return json_decode($response, true)['access_token'];
 }
 
@@ -54,9 +52,7 @@ curl_setopt_array($curl, array(
 
 $response = curl_exec($curl);
 
-curl_close($curl);
-
-$origin = $_SERVER['HTTP_ORIGIN'];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
 if (in_array($origin, $allowedOrigins)) {
     header("Access-Control-Allow-Origin: $origin");
