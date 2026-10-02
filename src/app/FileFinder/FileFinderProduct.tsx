@@ -2,6 +2,7 @@ import { Button } from '@theme';
 import React from 'react';
 
 import FileFinderInstall from '@app/FileFinder/FileFinderInstall.tsx';
+import LanguageFlags from '@app/FileFinder/LanguageFlags.tsx';
 import { usePenFiles } from '@app/FilesContext.tsx';
 import { MergedProduct } from '@app/catalog/CatalogContext.tsx';
 import { Locale } from '@app/catalog/languages.ts';
@@ -57,12 +58,15 @@ const FileFinderProduct: React.FC<{
   return (
     <div className={cn(className, styles.root)}>
       {product.images.length !== 0 && (
-        <img
-          className={styles.img}
-          src={product.images[product.images.length - 1].url}
-          alt={product.name}
-          loading="lazy"
-        />
+        <div className={styles.imgWrapper}>
+          <img
+            className={styles.img}
+            src={product.images[product.images.length - 1].url}
+            alt={product.name}
+            loading="lazy"
+          />
+          <LanguageFlags locales={languages} />
+        </div>
       )}
       {showModal && (
         <FileFinderInstall

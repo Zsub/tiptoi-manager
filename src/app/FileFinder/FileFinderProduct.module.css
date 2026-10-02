@@ -19,3 +19,7 @@
   align-self: center;
   display: inline-block;
 }
+
+.imgWrapper {
+  position: relative;
+}

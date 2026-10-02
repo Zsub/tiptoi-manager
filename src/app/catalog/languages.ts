@@ -44,3 +44,16 @@ export const isLocale = (x: string): x is Locale =>
 /** A locale that is both known AND actually has a catalog behind it. */
 export const isAvailableLocale = (x: string): x is Locale =>
   LANGUAGES.some(({ code, available }) => code === x && available);
+
+/** Locale → Unicode region flag emoji. Only the 6 catalog locales are listed. */
+const LOCALE_FLAG_MAP: Record<Locale, string> = {
+  de_DE: '🇩🇪',
+  fr_FR: '🇫🇷',
+  nl_NL: '🇳🇱',
+  it_IT: '🇮🇹',
+  ru_RU: '🇷🇺',
+  en_GB: '🇬🇧',
+};
+
+export const flagEmoji = (locale: Locale): string =>
+  LOCALE_FLAG_MAP[locale] || '';
