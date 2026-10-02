@@ -23,3 +23,9 @@ interface Window {
     startIn?: FileSystemHandle | string;
   }): Promise<FileSystemDirectoryHandle>;
 }
+
+// Only the env vars the app reads; pulling in vite/client instead would
+// re-type every `*.svg` import as a URL string (see vite.config.ts).
+interface ImportMeta {
+  readonly env: { readonly VITE_API_BASE?: string };
+}

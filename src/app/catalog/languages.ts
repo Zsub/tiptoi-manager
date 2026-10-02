@@ -1,5 +1,5 @@
 /**
- * The catalog API (`api/getCatalog.php?language={locale}`) only accepts these
+ * The catalog API (`getCatalog.php?language={locale}`) only accepts these
  * six full locale codes. A bare or unknown code (e.g. `nl`) answers with
  * HTTP 200 and an EMPTY body, which makes `apiFetch` fail while parsing the
  * JSON - so an invalid locale fails silently. Always validate against this

@@ -76,7 +76,7 @@ const FileFinderInstall: React.FC<{
       setPending(true);
       try {
         const res = await fetch(
-          `${API_BASE}api/getFile.php?url=${encodeURI(file.url)}`
+          `${API_BASE}getFile.php?url=${encodeURI(file.url)}`
         );
         const blob = await res.blob();
         const text = await blobToString(blob);

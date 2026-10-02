@@ -273,7 +273,7 @@ export const CatalogContextProvider: React.FC<{
         return;
       }
       const catalog = await apiGet<Catalog>(
-        `${API_BASE}api/getCatalog.php?language=${locale}`
+        `${API_BASE}getCatalog.php?language=${locale}`
       );
       if (!isUsableCatalog(catalog)) {
         throw new Error(`empty catalog for ${locale}`);
