@@ -10,6 +10,10 @@
   border: 1px solid var(--c-border-light);
 }
 
+.imgWrapper {
+  position: relative;
+}
+
 .title {
   margin: var(--space-s) 0;
 }

@@ -4,6 +4,7 @@ import React from 'react';
 import { useDirHandle, usePenFiles } from '@app/FilesContext.tsx';
 import { SavedProduct } from '@app/storage/gmeFilesDB.ts';
 
+import LanguageFlags from '@app/FileFinder/LanguageFlags.tsx';
 import cn from '@utils/classnames.ts';
 import { writeFile } from '@utils/fileSystem.ts';
 import { stringToBlob } from '@utils/functions.ts';
@@ -48,12 +49,15 @@ const MyTiptoisProduct: React.FC<{
   return (
     <div className={cn(className, styles.root)}>
       {product.images.length !== 0 && (
-        <img
-          className={styles.img}
-          src={product.images[product.images.length - 1].url}
-          alt={product.name}
-          loading="lazy"
-        />
+        <div className={styles.imgWrapper}>
+          <img
+            className={styles.img}
+            src={product.images[product.images.length - 1].url}
+            alt={product.name}
+            loading="lazy"
+          />
+          {merged && <LanguageFlags locales={merged.availableIn} />}
+        </div>
       )}
       <p className={styles.title}>{product.name}</p>
       {!dirHandle && (
