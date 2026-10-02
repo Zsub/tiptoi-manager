@@ -1,14 +1,18 @@
-import { Button, Tooltip } from '@theme';
+import { Button, ContentModal, Tooltip } from '@theme';
 import React from 'react';
 
+import { LANGUAGES, Locale } from '@app/catalog/languages.ts';
 import { MergedProduct } from '@app/catalog/CatalogContext.tsx';
+import { GameFile, Product } from '@app/catalog/types.ts';
 import { useDirHandle, usePenFiles } from '@app/FilesContext.tsx';
 import { SavedProduct } from '@app/storage/gmeFilesDB.ts';
+import { useGmeFileStore } from '@app/storage/StorageContext.tsx';
 
 import LanguageFlags from '@app/FileFinder/LanguageFlags.tsx';
 import cn from '@utils/classnames.ts';
 import { writeFile } from '@utils/fileSystem.ts';
-import { stringToBlob } from '@utils/functions.ts';
+import { blobToString, stringToBlob } from '@utils/functions.ts';
+import { API_BASE } from '@utils/api/constants.ts';
 
 import styles from './MyTiptoisProduct.module.css';
 
