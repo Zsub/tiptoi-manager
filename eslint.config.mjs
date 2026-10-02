@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
 // break src/theme/SVG/generate.cjs's siblings), and `.mjs` lets this
 // file use ESM without that.
 export default tseslint.config(
-  { ignores: ['dist', 'dev-dist', 'public/sw.js'] },
+  { ignores: ['dist', 'dev-dist', 'public/sw.js', '.worktrees'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   // `configs.recommended` is still the legacy eslintrc shape; the flat
