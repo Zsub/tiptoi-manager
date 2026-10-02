@@ -53,7 +53,7 @@ const MyTiptoisProduct: React.FC<{
       if (gf && gf.fileName === installedName) return locale;
     }
     return null;
-  }, [merged, product.audioFile?.fileName]);
+  }, [merged, product.audioFile]);
 
   const downloadSwitchFile = React.useCallback(
     async (file: GameFile, prod: Product) => {
@@ -91,7 +91,7 @@ const MyTiptoisProduct: React.FC<{
         }
       }
     },
-    []
+    [setFile]
   );
 
   const write = async () => {

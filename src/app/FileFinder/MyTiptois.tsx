@@ -30,12 +30,9 @@ const MyTiptois: React.FC<{ className?: '' }> = ({ className = '' }) => {
       ) : (
         <div className={styles.list}>
           {products.map((savedProduct) => {
-            const mergedEntry = React.useMemo(() => {
-              if (!savedProduct.audioFile?.fileName) return undefined;
-              const bucket = productByGmeFileName[savedProduct.audioFile.fileName];
-              if (!bucket || bucket.length === 0) return undefined;
-              return bucket[0];
-            }, [savedProduct.audioFile?.fileName, productByGmeFileName]);
+            const mergedEntry = savedProduct.audioFile?.fileName
+              ? productByGmeFileName[savedProduct.audioFile.fileName]?.[0]
+              : undefined;
 
             return (
               <MyTiptoisProduct
