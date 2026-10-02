@@ -1,0 +1,16 @@
+.flags {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  display: flex;
+  gap: 0.15rem;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.25rem;
+}
+
+.flag {
+  font-size: 1rem;
+  line-height: 1;
+}
