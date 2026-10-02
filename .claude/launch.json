@@ -1,0 +1,24 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tiptoi-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 4541,
+      "url": "https://localhost:4541"
+    },
+    {
+      "name": "tiptoi-php",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "serve-php"],
+      "port": 8000
+    },
+    {
+      "name": "tiptoi-dist-http",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4180", "--directory", "dist"],
+      "port": 4180
+    }
+  ]
+}
