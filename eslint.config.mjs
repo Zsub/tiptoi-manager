@@ -4,10 +4,11 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-// Flat config, required from ESLint 9 onwards. Kept as `.mjs` rather than
-// `.js` deliberately: package.json has no `"type": "module"` (adding one would
-// break src/theme/SVG/generate.cjs's siblings), and `.mjs` lets this
-// file use ESM without that.
+// Flat config, required from ESLint 9 onwards. Kept as `.mjs` for
+// explicitness: package.json declares `"type": "module"` (the one CommonJS
+// script in the repo was renamed to `generate.cjs` when that landed, so a
+// plain `.js` name here is unambiguous) — but `.mjs` states the module
+// format without relying on the package.json setting.
 export default tseslint.config(
   { ignores: ['dist', 'dev-dist', 'public/sw.js', '.worktrees'] },
   js.configs.recommended,
